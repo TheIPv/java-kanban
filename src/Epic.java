@@ -1,9 +1,9 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Epic extends Task {
 
-    private ArrayList<Subtask> subtasks = new ArrayList<>();
-    private String status;
+    private LinkedList<Subtask> subtasks = new LinkedList<>();
+    private Statuses status;
 
     public Epic(String name, String description) {
         super(name, description);
@@ -17,7 +17,7 @@ public class Epic extends Task {
         subtasks.remove(subtask);
     }
 
-    public ArrayList<Subtask> getSubtasks() {
+    public LinkedList<Subtask> getSubtasks() {
         return subtasks;
     }
 
@@ -33,18 +33,18 @@ public class Epic extends Task {
    // PostComment{text='" + comments.get(0).getText() + "', whoLiked=" + Arrays.toString(comments.get(0).getWhoLiked()) + "},"
     public void updateStatus() {
         for (Subtask currentSubtask: subtasks) {
-            if (currentSubtask.getStatus().equals("NEW")) {
-                status = "NEW";
+            if (currentSubtask.getStatus().equals(Statuses.NEW)) {
+                status = Statuses.NEW;
                 return;
             }
         }
         for (Subtask currentSubtask: subtasks) {
-            if (currentSubtask.getStatus().equals("IN_PROGRESS")) {
-                status = "IN_PROGRESS";
+            if (currentSubtask.getStatus().equals(Statuses.IN_PROGRESS)) {
+                status = Statuses.IN_PROGRESS;
                 return;
             }
         }
-            status = "DONE";
+            status = Statuses.DONE;
     }
 
     public void removeAllSubtasks() {
