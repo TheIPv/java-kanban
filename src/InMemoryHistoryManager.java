@@ -7,8 +7,6 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     private int idForHistoryView = 0;
 
-    public InMemoryHistoryManager() {}
-
     @Override
     public void add(Task task) {
 
@@ -17,7 +15,6 @@ public class InMemoryHistoryManager implements HistoryManager{
         ++idForHistoryView;
     }
 
-    @Override
     public LinkedList<Task> getHistory() {
         return new LinkedList<>(histroryOfView.values());
     }

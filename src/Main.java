@@ -2,7 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        InMemoryTaskManager manager = new InMemoryTaskManager();
+        TaskManager manager = Managers.getDefault();
 
         Task firstTask = new Task("Первая задача", "Описание", Statuses.NEW);
         manager.createTask(firstTask);

@@ -33,4 +33,6 @@ public interface TaskManager {
 
     LinkedList<Subtask> getAllSubtaksOfEpic(Epic epic);
 
+    void getHistory();
+
 }

@@ -3,8 +3,8 @@ import java.util.LinkedList;
 public class InMemoryTaskManager implements TaskManager {
 
     private int uniqueId = 0;
-    InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
+    HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public LinkedList<Task> getAllTasks() {
@@ -51,21 +51,21 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         Task task = tasks.get(id);
-        inMemoryHistoryManager.add(task);
+        historyManager.add(task);
         return task;
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
-        inMemoryHistoryManager.add(subtask);
+        historyManager.add(subtask);
         return subtask;
     }
 
     @Override
     public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
-        inMemoryHistoryManager.add(epic);
+        historyManager.add(epic);
         return epic;
     }
 
@@ -141,8 +141,9 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasksList;
     }
 
+    @Override
     public void getHistory() {
-        System.out.println(inMemoryHistoryManager.getHistory());
+        System.out.println(historyManager.getHistory());
     }
 
 }
