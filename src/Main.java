@@ -31,7 +31,19 @@ public class Main {
         manager.createEpic(importantEpic);
 
         manager.getTaskById(1);
-        manager.getEpicById(6);
+        manager.getTaskById(2);
+        manager.getTaskById(1);
+        manager.getTaskById(1);
+        manager.getTaskById(1);
+        manager.getTaskById(1);
+        manager.getTaskById(2);
+
+        //manager.getSubtaskById(4);
+
+        //manager.getEpicById(6);
+
+        //manager.removeEpicById(6);
+
         manager.getHistory();
 
 
