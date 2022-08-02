@@ -47,6 +47,12 @@ public class Epic extends Task {
             status = Statuses.DONE;
     }
 
+    @Override
+    public Statuses getStatus() {
+        updateStatus();
+        return status;
+    }
+
     public void removeAllSubtasks() {
         subtasks.clear();
     }

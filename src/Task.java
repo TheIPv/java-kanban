@@ -41,4 +41,8 @@ public class Task {
         return status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
 }

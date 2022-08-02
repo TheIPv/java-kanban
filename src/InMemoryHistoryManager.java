@@ -65,10 +65,6 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public ArrayList<Task> getHistory() {
-        /*ArrayList<Task> tasks = new ArrayList<>();
-        for(Node curNode: histroryOfView.values()) {
-            tasks.add(curNode.getData());
-        }*/
         return getTasks();
     }
 }

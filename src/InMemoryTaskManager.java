@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private int uniqueId = 0;
+    private static int uniqueId = 0;
 
     HistoryManager historyManager = Managers.getDefaultHistory();
 
@@ -149,6 +149,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void getHistory() {
         System.out.println(historyManager.getHistory());
     }
+
+    public static void increaseId() {++uniqueId;}
 
 }
 
