@@ -35,4 +35,5 @@ public interface TaskManager {
 
     void getHistory();
 
+    LinkedList<Task> getPrioritizedTasks();
 }

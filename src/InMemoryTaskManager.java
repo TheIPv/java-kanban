@@ -1,4 +1,6 @@
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
 
@@ -70,14 +72,38 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void createTask(Task task) {
+    public void createTask(Task task) throws IllegalArgumentException {
+        try {
+            if (task.getStatus().equals(Statuses.IN_PROGRESS)) {
+                for (Task currentTask : getAllTasks()) {
+                    if (!currentTask.getStatus().equals(Statuses.IN_PROGRESS)) continue;
+                    if (task.getEndTime().compareTo(currentTask.getEndTime()) >= 0)
+                        throw new IllegalArgumentException();
+                }
+            }
+        }  catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println("Задачи не могут пересекаться по времени выполнения");
+            return;
+        }
         ++uniqueId;
         task.setId(uniqueId);
         tasks.put(uniqueId, task);
     }
 
     @Override
-    public void createSubtask(Subtask subtask) {
+    public void createSubtask(Subtask subtask) throws IllegalArgumentException {
+        try {
+            if (subtask.getStatus().equals(Statuses.IN_PROGRESS)) {
+                for (Subtask currentSubtask : getAllSubtasks()) {
+                    if (!currentSubtask.getStatus().equals(Statuses.IN_PROGRESS)) continue;
+                    if (subtask.getEndTime().compareTo(currentSubtask.getEndTime()) >= 0)
+                        throw new IllegalArgumentException();
+                }
+            }
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println("Подзадачи не могут пересекаться по времени выполнения");
+            return;
+        }
         ++uniqueId;
         subtask.setId(uniqueId);
         subtasks.put(uniqueId, subtask);
@@ -151,6 +177,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public static void increaseId() {++uniqueId;}
+
+    @Override
+    public LinkedList<Task> getPrioritizedTasks() {
+        LinkedList<Task> allTask = getAllTasks();
+        allTask.addAll(getAllSubtasks());
+        Collections.sort(allTask);
+        return allTask;
+    }
 
 }
 

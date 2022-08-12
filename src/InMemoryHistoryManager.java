@@ -37,7 +37,11 @@ public class InMemoryHistoryManager implements HistoryManager{
             return;
         }
         if (node.getPrevNode() != null) {
-            node.getPrevNode().setNextNode(node.getPrevNode().getNextNode());
+            if(node.getPrevNode() == head) {
+                head.setNextNode(node.getNextNode());
+            } else {
+                node.getPrevNode().setNextNode(node.getPrevNode().getNextNode());
+            }
         } else if (node.getPrevNode() == null) {
             head = node.getNextNode();
         }
