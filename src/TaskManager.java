@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public interface TaskManager {
 
@@ -33,7 +34,7 @@ public interface TaskManager {
 
     LinkedList<Subtask> getAllSubtaksOfEpic(Epic epic);
 
-    void getHistory();
+    List<Task> getHistory();
 
     LinkedList<Task> getPrioritizedTasks();
 }

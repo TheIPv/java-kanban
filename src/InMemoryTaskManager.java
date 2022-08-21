@@ -172,8 +172,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void getHistory() {
-        System.out.println(historyManager.getHistory());
+    public List<Task> getHistory() {
+        //System.out.println(historyManager.getHistory());
+        return historyManager.getHistory();
     }
 
     public static void increaseId() {++uniqueId;}

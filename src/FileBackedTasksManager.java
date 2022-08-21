@@ -99,9 +99,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     }
 
     @Override
-    public void getHistory() {
-        System.out.println(historyManager.getHistory());
+    public List<Task> getHistory() {
+       // System.out.println();
         save();
+        return historyManager.getHistory();
     }
     public void save() {
         try (FileWriter writer = new FileWriter("kanban.csv", false)) {
