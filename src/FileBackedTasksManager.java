@@ -233,7 +233,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         } catch (FileNotFoundException e) {
             System.out.println("Файлы сохранений отсутствуют. Создаю новый файл...");
         } catch (IOException e) {
-            throw new ManagerSaveException();
+            e.getMessage();
         }
         return fileBackedTasksManager;
     }

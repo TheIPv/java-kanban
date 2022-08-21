@@ -6,7 +6,7 @@ public class Task implements Comparable<Task> {
 
     protected String name;
     protected String description;
-    protected int id;
+    protected int id = -1;
     protected Statuses status;
 
     protected Duration duration = Duration.ZERO;

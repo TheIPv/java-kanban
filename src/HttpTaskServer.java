@@ -31,13 +31,6 @@ public class HttpTaskServer {
         //httpServer.stop(1);
     }
 
-
- /*   public static void main(String[] args)  throws IOException {
-        manager.createTask(new Task("Первая задача", "Описание", Statuses.NEW));
-
-
-    }*/
-
     static class TasksHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException, IllegalArgumentException {
@@ -169,25 +162,28 @@ public class HttpTaskServer {
                             case "task":
                                 Task task = gson.fromJson(body, Task.class);
                                 try {
+                                    manager.getTaskById(task.getId());
                                     manager.updateTask(task);
-                                } catch (NullPointerException nullPointerException) {
+                                } catch (NullPointerException e) {
                                     manager.createTask(task);
                                 }
                                 break;
                             case "epic":
                                 Epic epic = gson.fromJson(body, Epic.class);
                                 try {
-                                    manager.createEpic(epic);
-                                } catch (NullPointerException nullPointerException) {
+                                    manager.getEpicById(epic.getId());
                                     manager.updateEpic(epic);
+                                } catch (NullPointerException e) {
+                                    manager.createEpic(epic);
                                 }
                                 break;
                             case "subtask":
                                 Subtask subtask = gson.fromJson(body, Subtask.class);
                                 try {
-                                    manager.createSubtask(subtask);
-                                } catch (NullPointerException nullPointerException) {
+                                    manager.getSubtaskById(subtask.getId());
                                     manager.updateSubtask(subtask);
+                                } catch (NullPointerException e) {
+                                    manager.createSubtask(subtask);
                                 }
                                 break;
                         }

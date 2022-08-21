@@ -57,7 +57,7 @@ public class KVTaskClient {
             }
 
         } catch (IOException | InterruptedException e) {
-            System.out.println("Не удалось получить значение по ключу: "+key);
+            throw new ManagerSaveException(key);
         }
         return null;
     }

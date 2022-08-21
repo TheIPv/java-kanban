@@ -1,3 +1,4 @@
+import java.lang.reflect.Type;
 import java.net.URI;
 import com.google.gson.Gson;
 
@@ -21,22 +22,21 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     }
 
     static HTTPTaskManager load() throws ManagerSaveException {
+        String[] types = {"task","epic","subtask"};
+        Type[] classes = {Task.class, Epic.class, Subtask.class};
+        int i = 0;
         httpTaskManager = new HTTPTaskManager("http://localhost:8078");
-        try {
-            httpTaskManager.createTask(gson.fromJson(kvTaskClient.load("task"), Task.class));
-        } catch (NullPointerException nullPointerException) {
-        }
-        try {
-            httpTaskManager.createEpic(gson.fromJson(kvTaskClient.load("epic"), Epic.class));
-        } catch (NullPointerException nullPointerException) {
-        }
-        try {
-            httpTaskManager.createSubtask(gson.fromJson(kvTaskClient.load("subtask"), Subtask.class));
-        } catch (NullPointerException nullPointerException) {
-        }
-        try {
-            historyFromString(kvTaskClient.load("history"));
-        } catch (NullPointerException nullPointerException) {
+        while(i < 4) {
+            try {
+                if(i == 3) {
+                    historyFromString(kvTaskClient.load("history"));
+                } else {
+                    httpTaskManager.createTask(gson.fromJson(kvTaskClient.load(types[i]), classes[i]));
+                }
+            } catch (ManagerSaveException managerSaveException) {
+            } finally {
+                ++i;
+            }
         }
         return httpTaskManager;
     }
