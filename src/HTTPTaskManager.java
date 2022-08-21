@@ -34,6 +34,7 @@ public class HTTPTaskManager extends FileBackedTasksManager {
                     httpTaskManager.createTask(gson.fromJson(kvTaskClient.load(types[i]), classes[i]));
                 }
             } catch (ManagerSaveException managerSaveException) {
+                //Сообщение об ошибке выводится в методе load KVTaskClient
             } finally {
                 ++i;
             }
