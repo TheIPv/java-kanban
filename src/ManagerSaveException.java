@@ -1,9 +1,10 @@
-import java.io.IOException;
 
 public class ManagerSaveException extends RuntimeException {
 
+    private String key;
     public ManagerSaveException(String key) {
-        System.out.println("Не удалось получить значение по ключу: "+key);
+        this.key = key;
+        System.out.println("Не удалось получить значение по ключу: " + key);
     }
 
 }

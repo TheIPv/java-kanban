@@ -1,13 +1,14 @@
 import java.lang.reflect.Type;
 import java.net.URI;
-import com.google.gson.Gson;
+import java.util.HashMap;
 
+import com.google.gson.Gson;
 public class HTTPTaskManager extends FileBackedTasksManager {
 
     private static Gson gson = new Gson();
     private URI url;
     private static KVTaskClient kvTaskClient;
-    static HTTPTaskManager httpTaskManager;
+    static final HTTPTaskManager httpTaskManager = new HTTPTaskManager("http://localhost:8078");;
     public HTTPTaskManager(String url) {
         this.url = URI.create(url);
         kvTaskClient = new KVTaskClient(url);
@@ -22,23 +23,30 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     }
 
     static HTTPTaskManager load() throws ManagerSaveException {
-        String[] types = {"task","epic","subtask"};
-        Type[] classes = {Task.class, Epic.class, Subtask.class};
-        int i = 0;
-        httpTaskManager = new HTTPTaskManager("http://localhost:8078");
-        while(i < 4) {
+        try {
+            httpTaskManager.createTask(gson.fromJson(kvTaskClient.load("task"), Task.class));
+        } catch (ManagerSaveException managerSaveException) {
+            //Сообщение об ошибке выводится в методе load KVTaskClient
+        } finally {
             try {
-                if(i == 3) {
-                    historyFromString(kvTaskClient.load("history"));
-                } else {
-                    httpTaskManager.createTask(gson.fromJson(kvTaskClient.load(types[i]), classes[i]));
-                }
+                httpTaskManager.createTask(gson.fromJson(kvTaskClient.load("epic"), Epic.class));
             } catch (ManagerSaveException managerSaveException) {
                 //Сообщение об ошибке выводится в методе load KVTaskClient
             } finally {
-                ++i;
+                try {
+                    httpTaskManager.createSubtask(gson.fromJson(kvTaskClient.load("subtask"), Subtask.class));
+                } catch (ManagerSaveException managerSaveException) {
+                    //Сообщение об ошибке выводится в методе load KVTaskClient
+                } finally {
+                    try {
+                        historyFromString(kvTaskClient.load("history"));
+                    } catch (ManagerSaveException managerSaveException) {
+                        //Сообщение об ошибке выводится в методе load KVTaskClient
+                    }
+                }
             }
         }
         return httpTaskManager;
     }
+
 }
